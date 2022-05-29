@@ -10,9 +10,7 @@ mixin Mover on Entity {
   }
 }
 
-mixin Attacker on Entity {
-  late final int attackDamage;
-
+mixin Attacker {
   void attack(targetEntity, attacker) {
     print(
         '${attacker.name} attacked ${targetEntity.name} for ${attacker.attackDamage} damage');
@@ -20,9 +18,7 @@ mixin Attacker on Entity {
   }
 }
 
-mixin HasHealth on Entity {
-  late int health;
-
+mixin HasHealth {
   void takeDamage(int amount, objectThis) {
     objectThis.health -= amount;
     print('${objectThis.name} has ${objectThis.health} health remaining');
@@ -35,12 +31,6 @@ class Character extends Entity with Mover, Attacker, HasHealth {
   final int attackDamage;
   int health;
 
-  @override
-  void move() {
-    super.move();
-  }
-
-  @override
   takeDamage(int amount, [_]) {
     super.takeDamage(amount, this);
   }
@@ -65,11 +55,6 @@ class Turret extends Entity with Attacker {
   Turret(super.name, this.attackDamage);
 
   final int attackDamage;
-
-  @override
-  set attackDamage(int _attackDamage) {
-    // ingore set attackDamage
-  }
 
   attack(targetEntity, [_]) {
     super.attack(targetEntity, this);

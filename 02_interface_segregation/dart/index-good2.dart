@@ -5,91 +5,74 @@ abstract class Entity {
 }
 
 mixin Mover on Entity {
-  external void move();
+  void move() {
+    print('${this.name} moved');
+  }
 }
 
 mixin Attacker on Entity {
   late final int attackDamage;
 
-  external void attack(Entity targetEntity);
+  void attack(targetEntity, attacker) {
+    print(
+        '${attacker.name} attacked ${targetEntity.name} for ${attacker.attackDamage} damage');
+    targetEntity.takeDamage(attacker.attackDamage);
+  }
 }
 
 mixin HasHealth on Entity {
   late int health;
 
-  external void takeDamage(int amount);
-}
-
-void printTakeDamage(int amount, objectThis) {
-  objectThis.health -= amount;
-  print('${objectThis.name} has ${objectThis.health} health remaining');
-}
-
-void printAttack(targetEntity, attacker) {
-  print(
-      '${attacker.name} attacked ${targetEntity.name} for ${attacker.attackDamage} damage');
-  targetEntity.takeDamage(attacker.attackDamage);
-}
-
-class Character implements Mover, Attacker, HasHealth {
-  Character(this.name, this.attackDamage, this.health);
-
-  @override
-  int attackDamage;
-
-  @override
-  int health;
-
-  @override
-  String name;
-
-  @override
-  attack(Entity targetEntity) {
-    printAttack(targetEntity, this);
+  void takeDamage(int amount, objectThis) {
+    objectThis.health -= amount;
+    print('${objectThis.name} has ${objectThis.health} health remaining');
   }
+}
+
+class Character extends Entity with Mover, Attacker, HasHealth {
+  Character(super.name, this.attackDamage, this.health);
+
+  final int attackDamage;
+  int health;
 
   @override
   void move() {
-    print('${this.name} moved');
+    super.move();
   }
 
   @override
-  takeDamage(int amount) {
-    printTakeDamage(amount, this);
+  takeDamage(int amount, [_]) {
+    super.takeDamage(amount, this);
+  }
+
+  attack(targetEntity, [_]) {
+    super.attack(targetEntity, this);
   }
 }
 
-class Wall implements HasHealth {
-  Wall(this.name, this.health);
+class Wall extends Entity with HasHealth {
+  Wall(super.name, this.health);
 
-  @override
   int health;
 
   @override
-  String name;
-
-  @override
-  takeDamage(int amount) {
-    printTakeDamage(amount, this);
+  takeDamage(int amount, [_]) {
+    super.takeDamage(amount, this);
   }
 }
 
-class Turret implements Attacker {
-  Turret(this.name, this.attackDamage);
+class Turret extends Entity with Attacker {
+  Turret(super.name, this.attackDamage);
 
   final int attackDamage;
 
   @override
-  String name;
-
-  @override
-  attack(Entity targetEntity) {
-    printAttack(targetEntity, this);
-  }
-
-  @override
   set attackDamage(int _attackDamage) {
     // ingore set attackDamage
+  }
+
+  attack(targetEntity, [_]) {
+    super.attack(targetEntity, this);
   }
 }
 
@@ -102,8 +85,4 @@ void main(List<String> args) {
   character.move();
   character.attack(wall);
   turret.attack(character);
-  character.attack(wall);
-  character.attack(wall);
-  character.move();
-  character.attack(wall);
 }

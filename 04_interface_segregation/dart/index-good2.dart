@@ -61,11 +61,11 @@ class Turret extends Entity with Attacker {
   }
 }
 
-var turret = Turret('Turret', 5);
-var character = Character('Character', 3, 100);
-var wall = Wall('Wall', 200);
-
 void main(List<String> args) {
+  var turret = Turret('Turret', 5);
+  var character = Character('Character', 3, 100);
+  var wall = Wall('Wall', 200);
+
   turret.attack(character);
   character.move();
   character.attack(wall);

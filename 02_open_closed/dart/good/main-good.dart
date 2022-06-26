@@ -1,8 +1,4 @@
-import 'type_question/boolean_question.dart';
-import 'type_question/multple_choice_question.dart';
-import 'type_question/print_question.dart';
-import 'type_question/range_question.dart';
-import 'type_question/text_question.dart';
+import 'type_question/type_question.dart';
 
 void printQuiz(List<PrintQuestion> questions) {
   questions.forEach((PrintQuestion question) {

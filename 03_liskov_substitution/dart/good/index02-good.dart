@@ -12,7 +12,7 @@ mixin SwimingBrid {
 
 class Duck with SwimingBrid, FlyingBird {
   void quack() {
-    print('I Duck can quack');
+    print('I ${this.runtimeType} can quack');
   }
 }
 

@@ -1,18 +1,18 @@
 class FlyingBird {
   fly (): void {
-    console.log('I can fly')
+    console.log(`I ${this.constructor.name} can fly`)
   }
 }
 
 class SwimingBrid {
   swim (): void {
-    console.log('I can swim')
+    console.log(`I ${this.constructor.name} can swim`)
   }
 }
 
-class Duck extends FlyingBird {
+class Duck extends FlyingBird  {
   quack (): void {
-    console.log('I can quack')
+    console.log(`I ${this.constructor.name} can quack`)
   }
 }
 class Penguin extends SwimingBrid {
